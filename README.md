@@ -1,13 +1,16 @@
-Project Overview
-This project deploys a Flask web application to Google Kubernetes Engine (GKE) using:
+# Flask App Deployment on GKE using Terraform and Docker
 
-Terraform to provision GKE and Kubernetes resources
+## Project Overview
 
-Docker to containerize the Flask app
+This project demonstrates how to deploy a **Flask web application** on **Google Kubernetes Engine (GKE)** using:
 
-Kubernetes Service to expose the app to the internet via LoadBalancer
+- **Terraform** – to provision the GKE cluster and Kubernetes resources  
+- **Docker** – to containerize the Flask application  
+- **Kubernetes Service** – to expose the app to the internet with a LoadBalancer
 
-Architecture
+## Architecture
+
+```
 Local Machine:
   - Build Docker Image
   - Push Image to Google Container Registry (GCR)
@@ -18,54 +21,71 @@ Terraform:
 
 GKE:
   - Run Flask App Containers
-  - Expose App via LoadBalancer
-Tech Stack
-Google Cloud (GKE, GCR)
+  - Expose App via LoadBalancer (External IP)
+```
 
-Terraform
+## Tech Stack
 
-Docker
+- **Google Cloud Platform (GKE, GCR)**
+- **Terraform**
+- **Docker**
+- **Kubernetes**
+- **Flask (Python)**
 
-Kubernetes
+## Deployment Steps
 
-Flask (Python)
+### 1️⃣ Build and Push Docker Image
 
-Manual Deployment Process
-1️⃣ Build and Push Docker Image
 gcloud auth configure-docker
 
 docker build -t flask-app .
 docker tag flask-app gcr.io/flask-gke-2025/flask-app:latest
 docker push gcr.io/flask-gke-2025/flask-app:latest
-2️⃣ Provision Infrastructure and Deploy App
+```
+
+### 2️⃣ Deploy Infrastructure with Terraform
 
 terraform init
 terraform apply
-3️⃣ Access the App
-Get the LoadBalancer IP:
+```
+
+### 3️⃣ Access the Flask App
+
+After deployment, get the LoadBalancer IP:
 
 kubectl get service flask-service
-Visit:
+```
 
+Open in your browser:
+
+```
 http://<EXTERNAL-IP>
+```
 
-Folder Structure
+## Project Structure
+
+```
 flask-gke-terraform/
 ├── app/
-│   ├── app.py
-│   ├── requirements.txt
-│   └── Dockerfile
+│   ├── app.py              # Flask application
+│   ├── requirements.txt    # Python dependencies
+│   └── Dockerfile          # Docker build instructions
 ├── terraform/
-│   ├── main.tf
-│   ├── provider.tf
-│   └── outputs.tf
+│   ├── main.tf              # GKE Cluster & Kubernetes Deployment/Service
+│   ├── provider.tf          # GCP & Kubernetes provider configs
+│   └── outputs.tf           # Outputs for service IP etc.
 ├── README.md
-Project Purpose
-This project demonstrates:
+```
 
-Infrastructure as Code using Terraform
+## Project Purpose
 
-Containerization using Docker
+This project gives hands-on experience in:
 
-Cloud-native deployment using Kubernetes (GKE)
+- **Infrastructure Automation (IaC)** with Terraform  
+- **Containerization** with Docker  
+- **Cloud-native Application Deployment** using Kubernetes on GKE  
+
+It simulates real-world DevOps workflows for cloud infrastructure and microservices deployment.
+
+
 
